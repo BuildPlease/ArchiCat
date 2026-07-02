@@ -1,4 +1,4 @@
-import type { ArchicatAppDependency } from './archicat-project-graph.js';
+import type { ArchicatAppDependency } from './archicat-project-graph';
 
 /**
  * @description User-facing app composition definition input.

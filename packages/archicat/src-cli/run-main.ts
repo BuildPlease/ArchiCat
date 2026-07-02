@@ -1,6 +1,6 @@
 import { ConsoleOutput } from '@internal/console';
 
-import type { ArchicatCliCommandLine, ArchicatCliCommandOptions, ArchicatCliCommandResult } from './commands/index.js';
+import type { ArchicatCliCommandLine, ArchicatCliCommandOptions, ArchicatCliCommandResult } from './commands/index';
 import {
   runBuildCommand,
   runCheckCommand,
@@ -8,7 +8,7 @@ import {
   runGenerateCommand,
   runGraphCommand,
   runValidateCommand,
-} from './commands/index.js';
+} from './commands/index';
 
 // MARK: - Public
 

@@ -23,5 +23,5 @@ export type {
   ArchicatSurfaceConfig,
   ArchicatSurfaceContract,
   ArchicatSurfaceInput,
-} from './configs/index.js';
-export { defineApp, defineArchicatConfig, defineLibrary, defineModule } from './configs/index.js';
+} from './configs/index';
+export { defineApp, defineArchicatConfig, defineLibrary, defineModule } from './configs/index';

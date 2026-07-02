@@ -1,1 +1,1 @@
-export { resolveArchicatProject } from './resolve-project.js';
+export { resolveArchicatProject } from './resolve-project';

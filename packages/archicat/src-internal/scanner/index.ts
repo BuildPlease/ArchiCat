@@ -1,2 +1,2 @@
-export * from './file-scanner.js';
-export * from './import-scanner.js';
+export * from './file-scanner';
+export * from './import-scanner';

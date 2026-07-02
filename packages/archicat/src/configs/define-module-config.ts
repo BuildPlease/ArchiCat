@@ -1,5 +1,5 @@
-import type { ArchicatModuleContract, ArchicatModuleInput } from './module-config.js';
-import { defineSurface } from './define-surface-config.js';
+import type { ArchicatModuleContract, ArchicatModuleInput } from './module-config';
+import { defineSurface } from './define-surface-config';
 
 /**
  * @description Defines one Archicat module.

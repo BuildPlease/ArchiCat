@@ -1,5 +1,5 @@
-import type { ArchicatLibraryContract, ArchicatLibraryInput } from './library-config.js';
-import { defineSurface } from './define-surface-config.js';
+import type { ArchicatLibraryContract, ArchicatLibraryInput } from './library-config';
+import { defineSurface } from './define-surface-config';
 
 /**
  * @description Defines one Archicat library.

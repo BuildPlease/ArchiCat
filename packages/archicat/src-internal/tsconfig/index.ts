@@ -3,4 +3,4 @@ export {
   readTsconfigExtendsPaths,
   readTsconfigFile,
   resolveProjectTsconfig,
-} from './tsconfig-utils.js';
+} from './tsconfig-utils';

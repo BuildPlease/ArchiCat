@@ -1,4 +1,4 @@
-import type { ArchicatAppContract, ArchicatAppInput } from './app-config.js';
+import type { ArchicatAppContract, ArchicatAppInput } from './app-config';
 
 /**
  * @description Defines one Archicat app composition root.

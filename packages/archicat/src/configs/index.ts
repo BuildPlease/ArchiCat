@@ -1,4 +1,4 @@
-export type { ArchicatAppContract, ArchicatAppInput } from './app-config.js';
+export type { ArchicatAppContract, ArchicatAppInput } from './app-config';
 export type {
   ArchicatAliasConfig,
   ArchicatConfig,
@@ -7,7 +7,7 @@ export type {
   ArchicatPrefixConfig,
   ArchicatTypeScriptConfigInput,
   ArchicatTypeScriptTsConfigInput,
-} from './archicat-config.js';
+} from './archicat-config';
 export type {
   ArchicatAppDependencies,
   ArchicatAppDependency,
@@ -19,11 +19,11 @@ export type {
   ArchicatModuleApiDependency,
   ArchicatModuleImplDependencies,
   ArchicatModuleImplDependency,
-} from './archicat-project-graph.js';
-export type { ArchicatLibraryContract, ArchicatLibraryInput } from './library-config.js';
-export type { ArchicatModuleContract, ArchicatModuleInput } from './module-config.js';
-export type { ArchicatSurfaceConfig, ArchicatSurfaceContract, ArchicatSurfaceInput } from './surface-config.js';
-export { defineApp } from './define-app-config.js';
-export { defineArchicatConfig } from './define-archicat-config.js';
-export { defineLibrary } from './define-library-config.js';
-export { defineModule } from './define-module-config.js';
+} from './archicat-project-graph';
+export type { ArchicatLibraryContract, ArchicatLibraryInput } from './library-config';
+export type { ArchicatModuleContract, ArchicatModuleInput } from './module-config';
+export type { ArchicatSurfaceConfig, ArchicatSurfaceContract, ArchicatSurfaceInput } from './surface-config';
+export { defineApp } from './define-app-config';
+export { defineArchicatConfig } from './define-archicat-config';
+export { defineLibrary } from './define-library-config';
+export { defineModule } from './define-module-config';

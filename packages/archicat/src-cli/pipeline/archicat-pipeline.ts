@@ -2,8 +2,8 @@ import path from 'node:path';
 
 import { ConsoleOutput } from '@internal/console';
 
-import type { ArchicatCliCommandLine, ArchicatCliCommandOptions, ArchicatCliCommandResult } from '../commands/index.js';
-import { ArchicatPipelineContext } from './archicat-pipeline-context.js';
+import type { ArchicatCliCommandLine, ArchicatCliCommandOptions, ArchicatCliCommandResult } from '../commands/index';
+import { ArchicatPipelineContext } from './archicat-pipeline-context';
 
 // MARK: - Public
 

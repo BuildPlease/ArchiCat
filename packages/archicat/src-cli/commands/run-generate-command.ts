@@ -1,5 +1,5 @@
-import type { ArchicatCliCommandOptions, ArchicatCliCommandResult } from './command-result.js';
-import { runBuildCommand } from './run-build-command.js';
+import type { ArchicatCliCommandOptions, ArchicatCliCommandResult } from './command-result';
+import { runBuildCommand } from './run-build-command';
 
 // MARK: - Public
 

@@ -1,5 +1,5 @@
-import type { ArchicatLibraryApiDependency, ArchicatLibraryImplDependency } from './archicat-project-graph.js';
-import type { ArchicatSurfaceContract, ArchicatSurfaceInput } from './surface-config.js';
+import type { ArchicatLibraryApiDependency, ArchicatLibraryImplDependency } from './archicat-project-graph';
+import type { ArchicatSurfaceContract, ArchicatSurfaceInput } from './surface-config';
 
 /**
  * @description User-facing library definition input.

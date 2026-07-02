@@ -1,5 +1,5 @@
-import type { ArchicatCliCommandOptions, ArchicatCliCommandResult } from './command-result.js';
-import { runValidateCommand } from './run-validate-command.js';
+import type { ArchicatCliCommandOptions, ArchicatCliCommandResult } from './command-result';
+import { runValidateCommand } from './run-validate-command';
 
 // MARK: - Public
 

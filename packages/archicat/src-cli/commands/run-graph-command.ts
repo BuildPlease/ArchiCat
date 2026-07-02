@@ -1,7 +1,7 @@
 import { loadArchicatBuildContext } from '@internal/context';
 import { formatProjectGraph } from '@internal/graph';
 
-import type { ArchicatCliCommandOptions, ArchicatCliCommandResult } from './command-result.js';
+import type { ArchicatCliCommandOptions, ArchicatCliCommandResult } from './command-result';
 
 // MARK: - Public
 

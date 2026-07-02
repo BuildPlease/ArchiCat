@@ -1,5 +1,5 @@
-import type { DependencyOwner, ParsedDependencyTarget } from './dependency-target.js';
-import { formatTargetKind, parseDependencyTarget } from './parse-dependency-target.js';
+import type { DependencyOwner, ParsedDependencyTarget } from './dependency-target';
+import { formatTargetKind, parseDependencyTarget } from './parse-dependency-target';
 
 // MARK: - Dependency rule validation
 

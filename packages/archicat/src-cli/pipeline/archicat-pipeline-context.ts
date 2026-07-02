@@ -1,7 +1,7 @@
 import { loadArchicatBuildContext } from '@internal/context';
 import type { ResolvedArchicatProject } from '@internal/model';
 
-import type { ArchicatCliCommandOptions } from '../commands/index.js';
+import type { ArchicatCliCommandOptions } from '../commands/index';
 
 // MARK: - Public
 

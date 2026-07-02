@@ -1,5 +1,5 @@
-import { compactConfig } from './compact-config.js';
-import type { ArchicatSurfaceContract, ArchicatSurfaceInput } from './surface-config.js';
+import { compactConfig } from './compact-config';
+import type { ArchicatSurfaceContract, ArchicatSurfaceInput } from './surface-config';
 
 // MARK: - Surface config normalization
 

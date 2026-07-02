@@ -1,4 +1,4 @@
-export { ArchicatPipeline } from './archicat-pipeline.js';
-export type { ArchicatPipelineStep } from './archicat-pipeline.js';
-export { ArchicatPipelineContext } from './archicat-pipeline-context.js';
-export { doctorStep, generateStep, validateStep } from './archicat-pipeline-steps.js';
+export { ArchicatPipeline } from './archicat-pipeline';
+export type { ArchicatPipelineStep } from './archicat-pipeline';
+export { ArchicatPipelineContext } from './archicat-pipeline-context';
+export { doctorStep, generateStep, validateStep } from './archicat-pipeline-steps';

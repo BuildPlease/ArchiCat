@@ -2,8 +2,8 @@ import { doctorProject } from '@internal/doctor';
 import { generateArtifacts } from '@internal/generator';
 import { formatViolation, validateProject } from '@internal/validator';
 
-import type { ArchicatCliCommandResult } from '../commands/index.js';
-import type { ArchicatPipelineStep } from './archicat-pipeline.js';
+import type { ArchicatCliCommandResult } from '../commands/index';
+import type { ArchicatPipelineStep } from './archicat-pipeline';
 
 // MARK: - Public
 

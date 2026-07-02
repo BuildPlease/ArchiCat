@@ -24,6 +24,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "resolvePackageJsonExports": true,
+    "allowImportingTsExtensions": false,
 
     /* Decorators */
     "emitDecoratorMetadata": true,

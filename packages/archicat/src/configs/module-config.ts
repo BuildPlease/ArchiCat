@@ -1,5 +1,5 @@
-import type { ArchicatModuleApiDependency, ArchicatModuleImplDependency } from './archicat-project-graph.js';
-import type { ArchicatSurfaceContract, ArchicatSurfaceInput } from './surface-config.js';
+import type { ArchicatModuleApiDependency, ArchicatModuleImplDependency } from './archicat-project-graph';
+import type { ArchicatSurfaceContract, ArchicatSurfaceInput } from './surface-config';
 
 /**
  * @description User-facing module definition input.

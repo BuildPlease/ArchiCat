@@ -1,1 +1,1 @@
-export { formatProjectGraph } from './format-project-graph.js';
+export { formatProjectGraph } from './format-project-graph';

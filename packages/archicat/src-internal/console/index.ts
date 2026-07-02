@@ -1,2 +1,2 @@
-export type { ConsolePanelRow } from './console-output.js';
-export { ConsoleOutput } from './console-output.js';
+export type { ConsolePanelRow } from './console-output';
+export { ConsoleOutput } from './console-output';

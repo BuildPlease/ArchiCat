@@ -1,5 +1,5 @@
-import { compactConfig } from './compact-config.js';
-import type { ArchicatConfig, ArchicatConfigInput } from './archicat-config.js';
+import { compactConfig } from './compact-config';
+import type { ArchicatConfig, ArchicatConfigInput } from './archicat-config';
 
 type TypeScriptInput = NonNullable<ArchicatConfigInput['typescript']>;
 type TsConfigInput = NonNullable<TypeScriptInput['tsConfig']>;

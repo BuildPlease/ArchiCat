@@ -1,4 +1,4 @@
-import type { ParsedDependencyTarget } from './dependency-target.js';
+import type { ParsedDependencyTarget } from './dependency-target';
 
 // MARK: - Dependency target parsing
 

@@ -1,5 +1,5 @@
-import { ArchicatPipeline, doctorStep, generateStep, validateStep } from '../pipeline/index.js';
-import type { ArchicatCliCommandOptions, ArchicatCliCommandResult } from './command-result.js';
+import { ArchicatPipeline, doctorStep, generateStep, validateStep } from '../pipeline/index';
+import type { ArchicatCliCommandOptions, ArchicatCliCommandResult } from './command-result';
 
 // MARK: - Public
 
