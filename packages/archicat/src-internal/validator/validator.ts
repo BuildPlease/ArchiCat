@@ -99,15 +99,6 @@ function validateImport(
       return undefined;
     }
 
-    if (targetAlias.surface === 'impl' && owner.kind !== 'app') {
-      return makeViolation(
-        project,
-        filePath,
-        importPath,
-        `${formatOwner(owner)} cannot import implementation target "${targetAlias.target}". Implementation imports are allowed only from app composition roots.`,
-      );
-    }
-
     if (!canReach(project, owner.target, targetAlias.target)) {
       return makeViolation(
         project,
@@ -136,7 +127,7 @@ function validateRelativeImport(
   const targetPath = resolveImportPath(filePath, importPath);
   const targetOwner = findOwner(project, targetPath);
 
-  if (!targetOwner || isSameDefinition(owner, targetOwner)) {
+  if (!targetOwner || isSameTarget(owner, targetOwner)) {
     return undefined;
   }
 
@@ -194,8 +185,8 @@ function resolveImportPath(filePath: string, importPath: string): string {
   return stripKnownExtension(importPath.startsWith('/') ? importPath : path.resolve(path.dirname(filePath), importPath));
 }
 
-function isSameDefinition(left: SourceOwner, right: SourceOwner): boolean {
-  return left.kind === right.kind && left.name === right.name;
+function isSameTarget(left: SourceOwner, right: SourceOwner): boolean {
+  return left.target === right.target;
 }
 
 // MARK: - Alias resolving

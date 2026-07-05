@@ -41,8 +41,33 @@ describe('app imports', () => {
     expect(result.status, result.stderr).toBe(0);
   });
 
-  test('should reject implementation alias imports outside app composition roots', () => {
-    const root = createConsumerProject('app-rejects-module-impl-import', {
+  test('should allow implementation alias imports outside app roots when declared', () => {
+    const root = createConsumerProject('app-allows-declared-module-impl-import', {
+      config: {
+        appsInclude: ['./src/apps'],
+      },
+    });
+
+    createModule(root, { name: 'account' });
+    createModule(root, {
+      name: 'media',
+      implDependencies: ['module.account.impl'],
+      implIndex: `
+        import { accountImpl } from '@module/account/impl';
+        export const mediaImpl = accountImpl;
+      `,
+    });
+    createApp(root, { name: 'main-api', dependencies: ['module.media.impl'] });
+
+    expect(runArchicat(root, 'generate').status).toBe(0);
+
+    const result = runArchicat(root, 'validate');
+
+    expect(result.status, result.stderr).toBe(0);
+  });
+
+  test('should reject implementation alias imports outside app roots when dependency is missing', () => {
+    const root = createConsumerProject('app-rejects-undeclared-module-impl-import', {
       config: {
         appsInclude: ['./src/apps'],
       },
@@ -61,11 +86,11 @@ describe('app imports', () => {
     const generateResult = runArchicat(root, 'generate');
 
     expect(generateResult.status).not.toBe(0);
-    expect(generateResult.stderr).toMatch(/cannot import implementation target/);
+    expect(generateResult.stderr).toMatch(/imports "module\.account\.impl" but does not declare a dependency/);
 
     const result = runArchicat(root, 'validate');
 
     expect(result.status).not.toBe(0);
-    expect(result.stderr).toMatch(/cannot import implementation target/);
+    expect(result.stderr).toMatch(/imports "module\.account\.impl" but does not declare a dependency/);
   });
 });

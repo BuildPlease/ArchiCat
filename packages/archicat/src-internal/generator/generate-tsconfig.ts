@@ -88,13 +88,12 @@ function makeFiles(project: ResolvedArchicatProject): string[] {
 
 function makeArchicatAliasPaths(project: ResolvedArchicatProject): Record<string, string[]> {
   const paths: Record<string, string[]> = {};
-  const includeImplementationAliases = project.apps.length > 0;
 
   for (const definition of project.definitions) {
     paths[definition.alias] = [makeRelativeTsconfigPath(project.outDir, path.join(definition.api.mirrorRootPath, 'index.ts'))];
     paths[definition.aliasGlob] = [makeRelativeTsconfigPath(project.outDir, path.join(definition.api.mirrorRootPath, '*'))];
 
-    if (includeImplementationAliases && definition.implAlias && definition.implAliasGlob) {
+    if (definition.implAlias && definition.implAliasGlob) {
       paths[definition.implAlias] = [makeRelativeTsconfigPath(project.outDir, path.join(definition.impl.mirrorRootPath, 'index.ts'))];
       paths[definition.implAliasGlob] = [makeRelativeTsconfigPath(project.outDir, path.join(definition.impl.mirrorRootPath, '*'))];
     }

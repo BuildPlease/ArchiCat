@@ -11,8 +11,12 @@ import { runArchicat } from '@test/fixtures/run-archicat';
 const ARCHICAT_TYPES_INCLUDE = './types/**/*.d.ts';
 const ACCOUNT_API_ALIAS = '@module/account';
 const ACCOUNT_API_ALIAS_GLOB = '@module/account/*';
+const ACCOUNT_IMPL_ALIAS = '@module/account/impl';
+const ACCOUNT_IMPL_ALIAS_GLOB = '@module/account/impl/*';
 const ACCOUNT_API_INDEX_PATH = './modules/account/api/index.ts';
 const ACCOUNT_API_GLOB_PATH = './modules/account/api/*';
+const ACCOUNT_IMPL_INDEX_PATH = './modules/account/impl/index.ts';
+const ACCOUNT_IMPL_GLOB_PATH = './modules/account/impl/*';
 
 const DECORATOR_BASE_TSCONFIG = `
   {
@@ -74,6 +78,8 @@ describe('tsconfig generation', () => {
     expect(tsconfig.compilerOptions.baseUrl).toBeUndefined();
     expectPath(tsconfig, ACCOUNT_API_ALIAS, ACCOUNT_API_INDEX_PATH);
     expectPath(tsconfig, ACCOUNT_API_ALIAS_GLOB, ACCOUNT_API_GLOB_PATH);
+    expectPath(tsconfig, ACCOUNT_IMPL_ALIAS, ACCOUNT_IMPL_INDEX_PATH);
+    expectPath(tsconfig, ACCOUNT_IMPL_ALIAS_GLOB, ACCOUNT_IMPL_GLOB_PATH);
     expect(tsconfig.include).toEqual(['../src', ARCHICAT_TYPES_INCLUDE]);
   });
 

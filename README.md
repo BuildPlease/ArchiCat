@@ -1,27 +1,62 @@
-# Archicat
+# ArchiCat
 
 **M²: Modular Mirroring.**
 
-The generative architecture framework for clean architecture.
+ArchiCat is a Gradle-like generative architecture framework for TypeScript.
 
-Archicat generates a mirror from your source code. APIs become aliases. Implementations stay behind architecture rules.
+TypeScript asks: **will this import resolve?**  
+ArchiCat asks: **should this import exist?**
 
 ```bash
 npm i -D archicat
 ```
 
-## Why
+## Core rule
 
-TypeScript asks: will this import resolve?
-Archicat asks: should this import exist?
+```txt
+dependency graph = import permission graph
+```
 
-One is a compiler. The other is an architect.
+A source may import another ArchiCat target only when the dependency graph allows it.
 
-## Definitions
+ArchiCat validates:
 
-### Module
+```txt
+- unknown dependencies
+- self dependencies
+- API -> implementation dependencies
+- circular dependencies
+- cross-target source-path imports
+```
 
-Business/application unit.
+## Targets
+
+A module or library has two targets:
+
+```txt
+module.account.api
+module.account.impl
+library.backend.api
+library.backend.impl
+```
+
+An app is a composition root:
+
+```txt
+app.main-api
+```
+
+## Dependency rules
+
+```txt
+api  -> api targets only
+impl -> own api + declared targets
+app  -> declared api/impl targets
+```
+
+Implementation targets are not public by default. They are importable only when declared as dependencies.
+
+## Module
 
 ```ts
 import { defineModule } from 'archicat';
@@ -31,7 +66,7 @@ export default defineModule({
 
   api: {
     root: './api',
-    dependencies: ['module.account.api', 'library.error.api'],
+    dependencies: ['module.account.api'],
   },
 
   impl: {
@@ -41,9 +76,7 @@ export default defineModule({
 });
 ```
 
-### Library
-
-Lower reusable unit.
+## Library
 
 ```ts
 import { defineLibrary } from 'archicat';
@@ -56,9 +89,7 @@ export default defineLibrary({
 });
 ```
 
-### App
-
-Composition root.
+## App
 
 ```ts
 import { defineApp } from 'archicat';
@@ -74,50 +105,36 @@ export default defineApp({
 });
 ```
 
-## Dependency rules
-
-### Module
-
-| Source | Can depend on | Cannot depend on |
-|---|---|---|
-| `module.*.api` | `module.*.api`, `library.*.api` | `module.*.impl`, `library.*.impl` |
-| `module.*.impl` | own `module.*.api`, `module.*.api`, `library.*.api` | `module.*.impl`, `library.*.impl` |
-
-### Library
-
-| Source | Can depend on | Cannot depend on |
-|---|---|---|
-| `library.*.api` | `library.*.api` | `module.*`, `library.*.impl` |
-| `library.*.impl` | own `library.*.api`, `library.*.api` | `module.*`, `library.*.impl` |
-
-### App
-
-| Source | Can depend on | Cannot depend on |
-|---|---|---|
-| `app.*` | `module.*.api`, `module.*.impl`, `library.*.api`, `library.*.impl` | nothing inside the Archicat graph |
-
-> [!IMPORTANT]
-> Implementation targets are wired by app composition. Normal modules and libraries depend on API targets.
-
 ## Imports
 
-Public API import:
+Public API:
 
 ```ts
 import { AccountReader } from '@module/account';
 ```
 
-App composition import:
+Declared implementation dependency:
 
 ```ts
 import { mediaAssembly } from '@module/media/impl';
 ```
 
-Blocked outside app composition:
+Blocked without dependency:
 
 ```ts
-import { MediaRepository } from '@module/media/impl';
-import { MediaRepository } from '../../media/impl/repository';
+import { mediaAssembly } from '@module/media/impl';
+```
+
+Blocked source-path boundary bypass:
+
+```ts
+import { MediaRepository } from '../../media/impl/repository.js';
+```
+
+Local same-target imports stay normal:
+
+```ts
+import { dto } from './dto.js';
 ```
 
 ## Config
@@ -165,8 +182,7 @@ App `tsconfig.json`:
 }
 ```
 
-> [!IMPORTANT]
-> Generated `.archicat/tsconfig.json` extends `typescript.tsConfig.extends`, therefore put user aliases in `archicat.config.ts`, not in `compilerOptions.paths`.
+User aliases belong in `archicat.config.ts`, not in `compilerOptions.paths`.
 
 ## Output
 

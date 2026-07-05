@@ -7,24 +7,21 @@ import { writeTextFile } from '@internal/generator/file-writer';
 // MARK: - Graph type generation
 
 export function generateGraphTypes(project: ResolvedArchicatProject): void {
-  const moduleApiDependencies = [...project.modules.map((module) => module.apiTarget), ...project.libraries.map((library) => library.apiTarget)];
-  const moduleImplDependencies = moduleApiDependencies;
-  const libraryApiDependencies = project.libraries.map((library) => library.apiTarget);
-  const libraryImplDependencies = libraryApiDependencies;
-  const appDependencies = project.graph.targets.map((target) => target.key);
+  const allTargets = project.graph.targets.map((target) => target.key);
+  const apiTargets = project.graph.targets.filter((target) => target.surface === 'api').map((target) => target.key);
 
   const content = `import 'archicat';
 
 declare module 'archicat' {
-${renderInterface('ArchicatModuleApiDependencies', moduleApiDependencies)}
+${renderInterface('ArchicatModuleApiDependencies', apiTargets)}
 
-${renderInterface('ArchicatModuleImplDependencies', moduleImplDependencies)}
+${renderInterface('ArchicatModuleImplDependencies', allTargets)}
 
-${renderInterface('ArchicatLibraryApiDependencies', libraryApiDependencies)}
+${renderInterface('ArchicatLibraryApiDependencies', apiTargets)}
 
-${renderInterface('ArchicatLibraryImplDependencies', libraryImplDependencies)}
+${renderInterface('ArchicatLibraryImplDependencies', allTargets)}
 
-${renderInterface('ArchicatAppDependencies', appDependencies)}
+${renderInterface('ArchicatAppDependencies', allTargets)}
 }
 
 export {};

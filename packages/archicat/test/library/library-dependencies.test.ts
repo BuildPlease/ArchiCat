@@ -23,35 +23,19 @@ describe('library dependencies', () => {
     expect(result.status, result.stderr).toBe(0);
   });
 
-  test('should reject library dependency on module api', () => {
-    const root = createConsumerProject('library-rejects-module-api', {
+  test('should allow library dependency on any declared Archicat target', () => {
+    const root = createConsumerProject('library-gradle-like-dependencies', {
       config: {
         librariesInclude: ['./src/libraries'],
       },
     });
 
     createModule(root, { name: 'account' });
-    createLibrary(root, { name: 'email', implDependencies: ['module.account.api'] });
-
-    const result = runArchicat(root, 'generate');
-
-    expect(result.status).not.toBe(0);
-    expect(result.stderr).toMatch(/Library "email" impl cannot depend on module.api/);
-  });
-
-  test('should reject library dependency on library impl', () => {
-    const root = createConsumerProject('library-rejects-library-impl', {
-      config: {
-        librariesInclude: ['./src/libraries'],
-      },
-    });
-
     createLibrary(root, { name: 'redis' });
-    createLibrary(root, { name: 'cache', implDependencies: ['library.redis.impl'] });
+    createLibrary(root, { name: 'cache', implDependencies: ['module.account.api', 'library.redis.impl'] });
 
     const result = runArchicat(root, 'generate');
 
-    expect(result.status).not.toBe(0);
-    expect(result.stderr).toMatch(/Library "cache" impl cannot depend on library.impl/);
+    expect(result.status, result.stderr).toBe(0);
   });
 });

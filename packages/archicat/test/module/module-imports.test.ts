@@ -46,6 +46,27 @@ describe('module imports', () => {
     expect(result.status, result.stderr).toBe(0);
   });
 
+
+  test('should allow declared implementation target imports', () => {
+    const root = createConsumerProject('validate-declared-impl-dependency');
+
+    createModule(root, { name: 'account' });
+    createModule(root, {
+      name: 'media',
+      implDependencies: ['module.account.impl'],
+      implIndex: `
+        import { accountImpl } from '@module/account/impl';
+        export const mediaImpl = accountImpl;
+      `,
+    });
+
+    expect(runArchicat(root, 'generate').status).toBe(0);
+
+    const result = runArchicat(root, 'validate');
+
+    expect(result.status, result.stderr).toBe(0);
+  });
+
   test('should reject alias imports that are not declared as dependencies', () => {
     const root = createConsumerProject('validate-missing-dependency');
 

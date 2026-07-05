@@ -31,5 +31,23 @@ describe('graph type generation', () => {
     expect(graphTypes).toMatch(/'module\.account\.api': true/);
     expect(graphTypes).toMatch(/'module\.account\.impl': true/);
     expect(graphTypes).toMatch(/'library\.backend\.api': true/);
+
+    const moduleApiDependencies = getInterfaceBody(graphTypes, 'ArchicatModuleApiDependencies');
+    const moduleImplDependencies = getInterfaceBody(graphTypes, 'ArchicatModuleImplDependencies');
+
+    expect(moduleApiDependencies).toContain("'module.account.api': true;");
+    expect(moduleApiDependencies).not.toContain("'module.account.impl': true;");
+    expect(moduleImplDependencies).toContain("'module.account.impl': true;");
   });
 });
+
+
+function getInterfaceBody(content: string, name: string): string {
+  const match = new RegExp(`interface ${name} \\{([\\s\\S]*?)\\n  \\}`).exec(content);
+
+  if (!match) {
+    throw new Error(`Missing generated interface: ${name}`);
+  }
+
+  return match[1] as string;
+}

@@ -65,7 +65,7 @@ function makeDefinitionReport(project: ResolvedArchicatProject, definition: Reso
     },
     aliases: {
       api: definition.alias,
-      impl: project.apps.length > 0 ? definition.implAlias : undefined,
+      impl: definition.implAlias,
     },
     dependencies: {
       api: definition.api.dependencies,

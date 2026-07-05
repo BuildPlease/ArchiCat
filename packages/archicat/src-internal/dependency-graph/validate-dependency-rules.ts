@@ -1,5 +1,5 @@
 import type { DependencyOwner, ParsedDependencyTarget } from './dependency-target';
-import { formatTargetKind, parseDependencyTarget } from './parse-dependency-target';
+import { parseDependencyTarget } from './parse-dependency-target';
 
 // MARK: - Dependency rule validation
 
@@ -14,40 +14,21 @@ export function validateDeclaredDependency(owner: DependencyOwner, dependency: s
     throw new Error(`${formatOwner(owner)} declares unknown dependency "${dependency}".`);
   }
 
-  if (owner.kind === target.kind && owner.name === target.name) {
+  if (owner.target === dependency) {
     throw new Error(`${formatOwner(owner)} cannot depend on itself: ${dependency}`);
   }
 
   if (!isAllowedDependency(owner, target)) {
-    throw new Error(`${formatOwner(owner)} cannot depend on ${formatTargetKind(target)} target "${dependency}".`);
+    throw new Error(`${formatOwner(owner)} cannot depend on implementation target "${dependency}" from an API surface.`);
   }
 }
 
 export function isAllowedDependency(owner: DependencyOwner, target: ParsedDependencyTarget): boolean {
-  switch (owner.surface) {
-    case 'api':
-      if (owner.kind === 'module') {
-        return target.surface === 'api' && (target.kind === 'module' || target.kind === 'library');
-      }
-
-      if (owner.kind === 'library') {
-        return target.surface === 'api' && target.kind === 'library';
-      }
-
-      return false;
-    case 'impl':
-      if (owner.kind === 'module') {
-        return target.surface === 'api' && (target.kind === 'module' || target.kind === 'library');
-      }
-
-      if (owner.kind === 'library') {
-        return target.surface === 'api' && target.kind === 'library';
-      }
-
-      return false;
-    case 'app':
-      return target.kind === 'module' || target.kind === 'library';
+  if (owner.surface === 'api' && target.surface === 'impl') {
+    return false;
   }
+
+  return true;
 }
 
 export function formatOwner(owner: DependencyOwner): string {
@@ -58,7 +39,7 @@ export function formatOwner(owner: DependencyOwner): string {
   return `${capitalize(owner.kind)} "${owner.name}" ${owner.surface}`;
 }
 
-// MARK: - Rule matching
+// MARK: - Private
 
 function capitalize(value: string): string {
   return `${value.charAt(0).toUpperCase()}${value.slice(1)}`;

@@ -31,4 +31,26 @@ describe('import boundary validator', () => {
     expect(result.status).not.toBe(0);
     expect(result.stderr).toMatch(/imports Module "account"/);
   });
+
+  test('should reject same-definition cross-surface source imports', () => {
+    const root = createConsumerProject('validator-cross-surface-source-import');
+
+    createModule(root, {
+      name: 'account',
+      implIndex: `
+        import { accountApi } from '../api/index.js';
+        export const accountImpl = accountApi;
+      `,
+    });
+
+    const generateResult = runArchicat(root, 'generate');
+
+    expect(generateResult.status).not.toBe(0);
+    expect(generateResult.stderr).toMatch(/imports Module "account" api through a source path/);
+
+    const result = runArchicat(root, 'validate');
+
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toMatch(/imports Module "account" api through a source path/);
+  });
 });
