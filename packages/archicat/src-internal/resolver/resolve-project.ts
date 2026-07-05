@@ -65,17 +65,19 @@ function resolveModule(loadedConfig: LoadedArchicatConfig, loadedModule: LoadedA
 
   const apiRootPath = contract.api.root ? resolveDeclaredRoot(definitionDir, contract.api.root, 'api', contract.name) : undefined;
   const implRootPath = contract.impl.root ? resolveDeclaredRoot(definitionDir, contract.impl.root, 'impl', contract.name) : undefined;
-  const alias = `${loadedConfig.resolvedConfig.prefixes.module}/${contract.name}`;
+  const aliasBase = `${loadedConfig.resolvedConfig.prefixes.module}/${contract.name}`;
+  const apiAlias = `${aliasBase}/api`;
+  const implAlias = `${aliasBase}/impl`;
 
   return {
     kind: 'module',
     name: contract.name,
     apiTarget: `module.${contract.name}.api`,
     implTarget: `module.${contract.name}.impl`,
-    alias,
-    aliasGlob: `${alias}/*`,
-    implAlias: `${alias}/impl`,
-    implAliasGlob: `${alias}/impl/*`,
+    alias: apiAlias,
+    aliasGlob: `${apiAlias}/*`,
+    implAlias,
+    implAliasGlob: `${implAlias}/*`,
     contractFilePath,
     definitionDir,
     api: resolveSurface(apiRootPath, contract.api.dependencies, path.join(loadedConfig.outDir, 'modules', contract.name, 'api')),
@@ -90,17 +92,19 @@ function resolveLibrary(loadedConfig: LoadedArchicatConfig, loadedLibrary: Loade
 
   const apiRootPath = contract.api.root ? resolveDeclaredRoot(definitionDir, contract.api.root, 'api', contract.name) : undefined;
   const implRootPath = contract.impl.root ? resolveDeclaredRoot(definitionDir, contract.impl.root, 'impl', contract.name) : undefined;
-  const alias = `${loadedConfig.resolvedConfig.prefixes.library}/${contract.name}`;
+  const aliasBase = `${loadedConfig.resolvedConfig.prefixes.library}/${contract.name}`;
+  const apiAlias = `${aliasBase}/api`;
+  const implAlias = `${aliasBase}/impl`;
 
   return {
     kind: 'library',
     name: contract.name,
     apiTarget: `library.${contract.name}.api`,
     implTarget: `library.${contract.name}.impl`,
-    alias,
-    aliasGlob: `${alias}/*`,
-    implAlias: `${alias}/impl`,
-    implAliasGlob: `${alias}/impl/*`,
+    alias: apiAlias,
+    aliasGlob: `${apiAlias}/*`,
+    implAlias,
+    implAliasGlob: `${implAlias}/*`,
     contractFilePath,
     definitionDir,
     api: resolveSurface(apiRootPath, contract.api.dependencies, path.join(loadedConfig.outDir, 'libraries', contract.name, 'api')),

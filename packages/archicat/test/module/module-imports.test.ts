@@ -16,7 +16,7 @@ describe('module imports', () => {
       name: 'media',
       dependencies: ['module.account.api'],
       implIndex: `
-        import { accountApi } from '@module/account';
+        import { accountApi } from '@module/account/api/index.js';
         export const mediaImpl = accountApi;
       `,
     });
@@ -34,7 +34,7 @@ describe('module imports', () => {
     createModule(root, {
       name: 'account',
       implIndex: `
-        import { accountApi } from '@module/account';
+        import { accountApi } from '@module/account/api/index.js';
         export const accountImpl = accountApi;
       `,
     });
@@ -55,7 +55,7 @@ describe('module imports', () => {
       name: 'media',
       implDependencies: ['module.account.impl'],
       implIndex: `
-        import { accountImpl } from '@module/account/impl';
+        import { accountImpl } from '@module/account/impl/index.js';
         export const mediaImpl = accountImpl;
       `,
     });
@@ -67,6 +67,27 @@ describe('module imports', () => {
     expect(result.status, result.stderr).toBe(0);
   });
 
+
+  test('should reject root and surface barrel aliases', () => {
+    const root = createConsumerProject('validate-explicit-surface-imports');
+
+    createModule(root, { name: 'account' });
+    createModule(root, {
+      name: 'media',
+      dependencies: ['module.account.api'],
+      implIndex: `
+        import { accountApi } from '@module/account';
+        export const mediaImpl = accountApi;
+      `,
+    });
+
+    const result = runArchicat(root, 'validate');
+
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toMatch(/Unsupported Archicat alias/);
+    expect(result.stderr).toMatch(/@module\/account\/api/);
+  });
+
   test('should reject alias imports that are not declared as dependencies', () => {
     const root = createConsumerProject('validate-missing-dependency');
 
@@ -74,7 +95,7 @@ describe('module imports', () => {
     createModule(root, {
       name: 'media',
       implIndex: `
-        import { accountApi } from '@module/account';
+        import { accountApi } from '@module/account/api/index.js';
         export const mediaImpl = accountApi;
       `,
     });
@@ -126,7 +147,7 @@ describe('module imports', () => {
       name: 'media',
       dependencies: ['library.backend.api'],
       implIndex: `
-        import { backendLibrary } from '@library/backend';
+        import { backendLibrary } from '@library/backend/api/index.js';
         export const mediaImpl = backendLibrary;
       `,
     });

@@ -9,14 +9,13 @@ import { runArchicat } from '@test/fixtures/run-archicat';
 // MARK: - Fixtures
 
 const ARCHICAT_TYPES_INCLUDE = './types/**/*.d.ts';
-const ACCOUNT_API_ALIAS = '@module/account';
-const ACCOUNT_API_ALIAS_GLOB = '@module/account/*';
+const ACCOUNT_LEGACY_ALIAS = '@module/account';
+const ACCOUNT_API_ALIAS = '@module/account/api';
+const ACCOUNT_API_ALIAS_GLOB = '@module/account/api/*';
 const ACCOUNT_IMPL_ALIAS = '@module/account/impl';
 const ACCOUNT_IMPL_ALIAS_GLOB = '@module/account/impl/*';
-const ACCOUNT_API_INDEX_PATH = './modules/account/api/index.ts';
-const ACCOUNT_API_GLOB_PATH = './modules/account/api/*';
-const ACCOUNT_IMPL_INDEX_PATH = './modules/account/impl/index.ts';
-const ACCOUNT_IMPL_GLOB_PATH = './modules/account/impl/*';
+const ACCOUNT_API_GLOB_PATH = '../src/modules/account/api/*';
+const ACCOUNT_IMPL_GLOB_PATH = '../src/modules/account/impl/*';
 
 const DECORATOR_BASE_TSCONFIG = `
   {
@@ -76,9 +75,10 @@ describe('tsconfig generation', () => {
     const tsconfig = readGeneratedTsconfig(root);
 
     expect(tsconfig.compilerOptions.baseUrl).toBeUndefined();
-    expectPath(tsconfig, ACCOUNT_API_ALIAS, ACCOUNT_API_INDEX_PATH);
+    expect(tsconfig.compilerOptions.paths[ACCOUNT_LEGACY_ALIAS]).toBeUndefined();
+    expect(tsconfig.compilerOptions.paths[ACCOUNT_API_ALIAS]).toBeUndefined();
     expectPath(tsconfig, ACCOUNT_API_ALIAS_GLOB, ACCOUNT_API_GLOB_PATH);
-    expectPath(tsconfig, ACCOUNT_IMPL_ALIAS, ACCOUNT_IMPL_INDEX_PATH);
+    expect(tsconfig.compilerOptions.paths[ACCOUNT_IMPL_ALIAS]).toBeUndefined();
     expectPath(tsconfig, ACCOUNT_IMPL_ALIAS_GLOB, ACCOUNT_IMPL_GLOB_PATH);
     expect(tsconfig.include).toEqual(['../src', ARCHICAT_TYPES_INCLUDE]);
   });
@@ -92,7 +92,7 @@ describe('tsconfig generation', () => {
 
     expect(tsconfig.extends).toBe('../tsconfig.node.json');
     expectPath(tsconfig, '@app/*', '../src/*');
-    expectPath(tsconfig, ACCOUNT_API_ALIAS, ACCOUNT_API_INDEX_PATH);
+    expectPath(tsconfig, ACCOUNT_API_ALIAS_GLOB, ACCOUNT_API_GLOB_PATH);
     expect(tsconfig.include).toEqual([
       '../bootstrap.ts',
       '../src/app',

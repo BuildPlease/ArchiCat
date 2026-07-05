@@ -90,12 +90,12 @@ function makeArchicatAliasPaths(project: ResolvedArchicatProject): Record<string
   const paths: Record<string, string[]> = {};
 
   for (const definition of project.definitions) {
-    paths[definition.alias] = [makeRelativeTsconfigPath(project.outDir, path.join(definition.api.mirrorRootPath, 'index.ts'))];
-    paths[definition.aliasGlob] = [makeRelativeTsconfigPath(project.outDir, path.join(definition.api.mirrorRootPath, '*'))];
+    if (definition.api.rootPath) {
+      paths[definition.aliasGlob] = [makeRelativeTsconfigPath(project.outDir, path.join(definition.api.rootPath, '*'))];
+    }
 
-    if (definition.implAlias && definition.implAliasGlob) {
-      paths[definition.implAlias] = [makeRelativeTsconfigPath(project.outDir, path.join(definition.impl.mirrorRootPath, 'index.ts'))];
-      paths[definition.implAliasGlob] = [makeRelativeTsconfigPath(project.outDir, path.join(definition.impl.mirrorRootPath, '*'))];
+    if (definition.impl.rootPath && definition.implAliasGlob) {
+      paths[definition.implAliasGlob] = [makeRelativeTsconfigPath(project.outDir, path.join(definition.impl.rootPath, '*'))];
     }
   }
 

@@ -92,6 +92,17 @@ function validateImport(
   filePath: string,
   importPath: string,
 ): ArchicatViolation | undefined {
+  const unsupportedArchicatAlias = resolveUnsupportedArchicatAlias(project, importPath);
+
+  if (unsupportedArchicatAlias) {
+    return makeViolation(
+      project,
+      filePath,
+      importPath,
+      `Unsupported Archicat alias "${importPath}". Use an explicit file import under "${unsupportedArchicatAlias.apiAlias}/*" or "${unsupportedArchicatAlias.implAlias}/*".`,
+    );
+  }
+
   const targetAlias = resolveAlias(project, importPath);
 
   if (targetAlias) {
@@ -193,7 +204,7 @@ function isSameTarget(left: SourceOwner, right: SourceOwner): boolean {
 
 function resolveAlias(project: ResolvedArchicatProject, importPath: string): AliasTarget | undefined {
   for (const definition of project.definitions) {
-    if (definition.implAlias && (importPath === definition.implAlias || importPath.startsWith(`${definition.implAlias}/`))) {
+    if (definition.implAlias && importPath.startsWith(`${definition.implAlias}/`)) {
       return {
         kind: definition.kind,
         name: definition.name,
@@ -202,12 +213,38 @@ function resolveAlias(project: ResolvedArchicatProject, importPath: string): Ali
       };
     }
 
-    if (importPath === definition.alias || importPath.startsWith(`${definition.alias}/`)) {
+    if (importPath.startsWith(`${definition.alias}/`)) {
       return {
         kind: definition.kind,
         name: definition.name,
         surface: 'api',
         target: definition.apiTarget,
+      };
+    }
+  }
+
+  return undefined;
+}
+
+function resolveUnsupportedArchicatAlias(
+  project: ResolvedArchicatProject,
+  importPath: string,
+): { apiAlias: string; implAlias: string } | undefined {
+  for (const definition of project.definitions) {
+    const prefix = `${project.config.prefixes[definition.kind]}/${definition.name}`;
+    const implAlias = definition.implAlias ?? `${prefix}/impl`;
+
+    if (importPath === prefix || importPath === definition.alias || importPath === implAlias) {
+      return {
+        apiAlias: definition.alias,
+        implAlias,
+      };
+    }
+
+    if (importPath.startsWith(`${prefix}/`) && !importPath.startsWith(`${definition.alias}/`) && !importPath.startsWith(`${implAlias}/`)) {
+      return {
+        apiAlias: definition.alias,
+        implAlias,
       };
     }
   }
