@@ -60,7 +60,7 @@ export function validateStep(): ArchicatPipelineStep {
 
 export function generateStep(): ArchicatPipelineStep {
   return {
-    name: 'build',
+    name: 'generate',
     async run(context): Promise<ArchicatCliCommandResult> {
       const project = await context.getProject();
       generateArtifacts(project);

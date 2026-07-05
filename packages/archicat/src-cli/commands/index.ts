@@ -4,7 +4,6 @@ export type {
   ArchicatCliCommandResult,
   ArchicatCliPanelRow,
 } from './command-result';
-export { runBuildCommand } from './run-build-command';
 export { runCheckCommand } from './run-check-command';
 export { runDoctorCommand } from './run-doctor-command';
 export { runGenerateCommand } from './run-generate-command';

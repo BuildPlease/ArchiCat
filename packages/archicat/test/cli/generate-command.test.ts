@@ -11,7 +11,7 @@ describe('generate command', () => {
     cleanupConsumerProjects();
   });
 
-  test('should build generated Archicat artifacts', () => {
+  test('should generate Archicat artifacts', () => {
     const root = createConsumerProject('cli-generate-output', {
       config: {
         librariesInclude: ['./src/libraries'],

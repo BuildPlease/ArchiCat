@@ -2,7 +2,6 @@ import { ConsoleOutput } from '@internal/console';
 
 import type { ArchicatCliCommandLine, ArchicatCliCommandOptions, ArchicatCliCommandResult } from './commands/index';
 import {
-  runBuildCommand,
   runCheckCommand,
   runDoctorCommand,
   runGenerateCommand,
@@ -38,8 +37,6 @@ async function runCommand(
   options: ArchicatCliCommandOptions,
 ): Promise<ArchicatCliCommandResult | undefined> {
   switch (command) {
-    case 'build':
-      return await runBuildCommand(options);
     case 'generate':
       return await runGenerateCommand(options);
     case 'validate':
@@ -108,13 +105,12 @@ function printHelp(): void {
     'ArchiCat',
     '',
     'Usage:',
-    '  archicat build [--config archicat.config.ts]',
+    '  archicat generate [--config archicat.config.ts]',
     '  archicat validate [--config archicat.config.ts]',
     '  archicat graph [--config archicat.config.ts]',
     '  archicat doctor [--config archicat.config.ts]',
     '',
     'Aliases:',
-    '  archicat generate -> archicat build',
     '  archicat check    -> archicat validate',
     '',
   ].join('\n'));

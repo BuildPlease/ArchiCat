@@ -18,12 +18,12 @@ describe('doctor command', () => {
     expect(result.status, result.stderr).toBe(0);
   });
 
-  test('should pass after build when setup is clean', () => {
-    const root = createConsumerProject('doctor-after-build');
+  test('should pass after generate when setup is clean', () => {
+    const root = createConsumerProject('doctor-after-generate');
 
     createModule(root, { name: 'account' });
 
-    expect(runArchicat(root, 'build').status).toBe(0);
+    expect(runArchicat(root, 'generate').status).toBe(0);
 
     const result = runArchicat(root, 'doctor');
 
