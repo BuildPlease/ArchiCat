@@ -194,17 +194,17 @@ function assertNoAliasConflicts(
 ): void {
   const configuredAliases = Object.keys(userAliases);
   const archicatAliases = Object.keys(archicatPaths);
-  const reservedPrefixes = Object.values(project.config.prefixes);
+  const reservedAliases = [project.config.modules.alias, project.config.libraries.alias];
 
   for (const alias of configuredAliases) {
     if (archicatAliases.includes(alias)) {
       throw new Error(`Alias conflict: archicat.config.ts alias already defines "${alias}", but Archicat needs it.`);
     }
 
-    for (const prefix of reservedPrefixes) {
-      if (alias === prefix || alias === `${prefix}/*` || alias.startsWith(`${prefix}/`)) {
+    for (const reservedAlias of reservedAliases) {
+      if (alias === reservedAlias || alias === `${reservedAlias}/*` || alias.startsWith(`${reservedAlias}/`)) {
         throw new Error(
-          `Alias conflict: archicat.config.ts alias "${alias}" is inside Archicat reserved prefix "${prefix}". Remove the alias or configure another Archicat prefix.`,
+          `Alias conflict: archicat.config.ts alias "${alias}" is inside Archicat reserved alias "${reservedAlias}". Remove the alias or configure another module/library alias.`,
         );
       }
     }

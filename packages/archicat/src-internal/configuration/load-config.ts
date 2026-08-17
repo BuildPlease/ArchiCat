@@ -58,13 +58,9 @@ function resolveConfig(config: ArchicatConfig): ResolvedArchicatConfig {
     outDir: config.outDir ?? ArchicatDefaults.outDir,
     typescript: resolveTypeScriptConfig(config),
     alias: { ...ArchicatDefaults.alias, ...(config.alias ?? {}) },
-    prefixes: {
-      module: config.prefixes?.module ?? ArchicatDefaults.prefixes.module,
-      library: config.prefixes?.library ?? ArchicatDefaults.prefixes.library,
-    },
-    modules: resolveDefinitionRootConfig(config.modules, ArchicatDefaults.modules),
-    libraries: resolveDefinitionRootConfig(config.libraries, ArchicatDefaults.libraries),
-    apps: resolveDefinitionRootConfig(config.apps, ArchicatDefaults.apps),
+    modules: resolveModulesConfig(config.modules),
+    libraries: resolveLibrariesConfig(config.libraries),
+    apps: resolveAppsConfig(config.apps),
   };
 }
 
@@ -84,11 +80,24 @@ function resolveTypeScriptConfig(config: ArchicatConfig): ResolvedArchicatConfig
   return { tsConfig: resolvedTsConfig };
 }
 
-function resolveDefinitionRootConfig(
-  config: { readonly include?: readonly string[] } | undefined,
-  defaults: { readonly include: readonly string[] },
-): { include: string[] } {
-  return { include: [...(config?.include ?? defaults.include)] };
+function resolveModulesConfig(config: ArchicatConfig['modules']): ResolvedArchicatConfig['modules'] {
+  return {
+    include: [...(config?.include ?? ArchicatDefaults.modules.include)],
+    alias: config?.alias ?? ArchicatDefaults.modules.alias,
+  };
+}
+
+function resolveLibrariesConfig(config: ArchicatConfig['libraries']): ResolvedArchicatConfig['libraries'] {
+  return {
+    include: [...(config?.include ?? ArchicatDefaults.libraries.include)],
+    alias: config?.alias ?? ArchicatDefaults.libraries.alias,
+  };
+}
+
+function resolveAppsConfig(config: ArchicatConfig['apps']): ResolvedArchicatConfig['apps'] {
+  return {
+    include: [...(config?.include ?? ArchicatDefaults.apps.include)],
+  };
 }
 
 function resolveTsconfigPath(rootDir: string, configuredExtends: string | undefined): string | undefined {
@@ -115,10 +124,9 @@ function assertArchicatConfig(input: unknown, filePath: string): asserts input i
   assertOptionalInclude(config.modules?.include, 'modules.include', filePath);
   assertOptionalInclude(config.libraries?.include, 'libraries.include', filePath);
   assertOptionalInclude(config.apps?.include, 'apps.include', filePath);
+  assertOptionalImportAlias(config.modules?.alias, 'modules.alias', filePath);
+  assertOptionalImportAlias(config.libraries?.alias, 'libraries.alias', filePath);
   assertOptionalAlias(config.alias, 'alias', filePath);
-
-  assertOptionalPrefix(config.prefixes?.module, 'prefixes.module', filePath);
-  assertOptionalPrefix(config.prefixes?.library, 'prefixes.library', filePath);
 }
 
 function assertOptionalTsConfig(value: unknown, filePath: string): void {
@@ -175,13 +183,13 @@ function assertOptionalInclude(value: unknown, key: string, filePath: string): v
   }
 }
 
-function assertOptionalPrefix(value: unknown, key: string, filePath: string): void {
+function assertOptionalImportAlias(value: unknown, key: string, filePath: string): void {
   if (value === undefined) {
     return;
   }
 
   if (typeof value !== 'string' || value.trim() === '' || value.includes('*') || value.endsWith('/')) {
-    throw new Error(`Archicat config ${key} must be a non-empty prefix without wildcard or trailing slash: ${filePath}`);
+    throw new Error(`Archicat config ${key} must be a non-empty alias without wildcard or trailing slash: ${filePath}`);
   }
 }
 

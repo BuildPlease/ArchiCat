@@ -12,7 +12,7 @@ export interface BuildReportDependency {
 
 export interface BuildReport {
   schemaVersion: number;
-  prefixes: {
+  aliases: {
     module: string;
     library: string;
   };

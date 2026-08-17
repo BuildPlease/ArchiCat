@@ -110,19 +110,19 @@ export default defineApp({
 Public API:
 
 ```ts
-import { AccountReader } from '@module/account';
+import { AccountReader } from '#modules/account';
 ```
 
 Declared implementation dependency:
 
 ```ts
-import { mediaAssembly } from '@module/media/impl';
+import { mediaAssembly } from '#modules/media/impl';
 ```
 
 Blocked without dependency:
 
 ```ts
-import { mediaAssembly } from '@module/media/impl';
+import { mediaAssembly } from '#modules/media/impl';
 ```
 
 Blocked source-path boundary bypass:
@@ -158,10 +158,12 @@ export default defineArchicatConfig({
 
   modules: {
     include: ['./src/modules'],
+    alias: '#modules',
   },
 
   libraries: {
     include: ['./src/libraries'],
+    alias: '#library',
   },
 
   apps: {

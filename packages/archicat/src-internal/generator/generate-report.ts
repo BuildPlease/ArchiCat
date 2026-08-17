@@ -18,8 +18,11 @@ export function generateReport(project: ResolvedArchicatProject): void {
 function makeBuildReport(project: ResolvedArchicatProject): ArchicatBuildReport {
   return {
     generatedBy: 'archicat',
-    schemaVersion: 1,
-    prefixes: project.config.prefixes,
+    schemaVersion: 2,
+    aliases: {
+      module: project.config.modules.alias,
+      library: project.config.libraries.alias,
+    },
     outputs: {
       outDir: makeRelativeDisplayPath(project.rootDir, project.outDir),
       reportsDir: makeRelativeDisplayPath(project.rootDir, project.reportsDir),

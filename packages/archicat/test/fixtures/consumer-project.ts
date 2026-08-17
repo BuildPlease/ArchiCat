@@ -14,7 +14,9 @@ export interface ConsumerProjectOptions {
 
 export interface ConsumerProjectConfig {
   readonly modulesInclude?: readonly string[];
+  readonly modulesAlias?: string;
   readonly librariesInclude?: readonly string[];
+  readonly librariesAlias?: string;
   readonly appsInclude?: readonly string[];
   readonly typescript?: {
     readonly tsConfig?: {
@@ -25,7 +27,6 @@ export interface ConsumerProjectConfig {
       readonly compilerOptions?: Record<string, unknown>;
     };
   };
-  readonly prefixes?: Record<string, string>;
   readonly alias?: Record<string, string>;
 }
 
@@ -50,10 +51,6 @@ export interface AppFixtureOptions {
 
 const ARCHICAT_CONFIG_FILE_NAME = 'archicat.config.ts';
 const CONSUMER_TSCONFIG_FILE_NAME = 'tsconfig.json';
-
-const DEFAULT_MODULES_INCLUDE = ['./src/modules'] as const;
-const DEFAULT_LIBRARIES_INCLUDE = [] as const;
-const DEFAULT_APPS_INCLUDE = [] as const;
 
 const DEFAULT_TYPESCRIPT_CONFIG = Object.freeze({
   tsConfig: Object.freeze({
@@ -188,13 +185,20 @@ function writeDefinitionFile(filePath: string, factoryName: string, fields: read
 // MARK: - Config formatting
 
 function makeRootConfig(config: ConsumerProjectConfig): string {
+  const moduleFields = [
+    ...(config.modulesInclude ? [`include: ${JSON.stringify(config.modulesInclude)}`] : []),
+    ...(config.modulesAlias ? [`alias: '${config.modulesAlias}'`] : []),
+  ];
+  const libraryFields = [
+    ...(config.librariesInclude ? [`include: ${JSON.stringify(config.librariesInclude)}`] : []),
+    ...(config.librariesAlias ? [`alias: '${config.librariesAlias}'`] : []),
+  ];
   const fields = [
     `typescript: ${formatValue(config.typescript ?? DEFAULT_TYPESCRIPT_CONFIG)}`,
-    ...makeOptionalField('prefixes', config.prefixes, false),
     ...makeOptionalField('alias', config.alias, true),
-    `modules: { include: ${JSON.stringify(config.modulesInclude ?? DEFAULT_MODULES_INCLUDE)} }`,
-    `libraries: { include: ${JSON.stringify(config.librariesInclude ?? DEFAULT_LIBRARIES_INCLUDE)} }`,
-    `apps: { include: ${JSON.stringify(config.appsInclude ?? DEFAULT_APPS_INCLUDE)} }`,
+    ...(moduleFields.length ? [`modules: { ${moduleFields.join(', ')} }`] : []),
+    ...(libraryFields.length ? [`libraries: { ${libraryFields.join(', ')} }`] : []),
+    ...(config.appsInclude ? [`apps: { include: ${JSON.stringify(config.appsInclude)} }`] : []),
   ];
 
   return `

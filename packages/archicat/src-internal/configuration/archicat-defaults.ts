@@ -21,15 +21,13 @@ export const ArchicatDefaults = Object.freeze({
       files: Object.freeze([] as const),
     }),
   }),
-  prefixes: Object.freeze({
-    module: '@module',
-    library: '@library',
-  }),
   modules: Object.freeze({
     include: Object.freeze(['./src/modules'] as const),
+    alias: '#modules',
   }),
   libraries: Object.freeze({
     include: Object.freeze([] as const),
+    alias: '#library',
   }),
   apps: Object.freeze({
     include: Object.freeze([] as const),

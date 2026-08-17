@@ -1,12 +1,13 @@
 export type { ArchicatAppContract, ArchicatAppInput } from './app-config';
 export type {
-  ArchicatAliasConfig,
+  AliasConfig,
+  AppsConfigInput,
   ArchicatConfig,
   ArchicatConfigInput,
-  ArchicatDefinitionRootConfig,
-  ArchicatPrefixConfig,
-  ArchicatTypeScriptConfigInput,
-  ArchicatTypeScriptTsConfigInput,
+  LibrariesConfigInput,
+  ModulesConfigInput,
+  TypeScriptConfigInput,
+  TsConfigInput,
 } from './archicat-config';
 export type {
   ArchicatAppDependencies,

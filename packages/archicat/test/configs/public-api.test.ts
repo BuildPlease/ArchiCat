@@ -48,17 +48,33 @@ describe('public API', () => {
     });
   });
 
-  test('should define immutable root config with optional input', () => {
+  test('should define immutable root config with domain configs', () => {
     const config = publicApi.defineArchicatConfig({
       modules: {
         include: ['./src/modules'],
+        alias: '#domain',
+      },
+      libraries: {
+        include: ['./src/libraries'],
+        alias: '#shared',
+      },
+      apps: {
+        include: ['./src/apps'],
       },
     });
 
-    expect(config.modules.include).toEqual(['./src/modules']);
+    expect(config.modules).toEqual({ include: ['./src/modules'], alias: '#domain' });
+    expect(config.libraries).toEqual({ include: ['./src/libraries'], alias: '#shared' });
+    expect(config.apps).toEqual({ include: ['./src/apps'] });
 
     expect(() => {
       config.modules.include.push('./other');
+    }).toThrow();
+    expect(() => {
+      config.libraries.include.push('./other');
+    }).toThrow();
+    expect(() => {
+      config.apps.include.push('./other');
     }).toThrow();
   });
 });

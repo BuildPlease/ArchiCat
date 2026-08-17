@@ -65,7 +65,7 @@ function resolveModule(loadedConfig: LoadedArchicatConfig, loadedModule: LoadedA
 
   const apiRootPath = contract.api.root ? resolveDeclaredRoot(definitionDir, contract.api.root, 'api', contract.name) : undefined;
   const implRootPath = contract.impl.root ? resolveDeclaredRoot(definitionDir, contract.impl.root, 'impl', contract.name) : undefined;
-  const aliasBase = `${loadedConfig.resolvedConfig.prefixes.module}/${contract.name}`;
+  const aliasBase = `${loadedConfig.resolvedConfig.modules.alias}/${contract.name}`;
   const apiAlias = `${aliasBase}/api`;
   const implAlias = `${aliasBase}/impl`;
 
@@ -92,7 +92,7 @@ function resolveLibrary(loadedConfig: LoadedArchicatConfig, loadedLibrary: Loade
 
   const apiRootPath = contract.api.root ? resolveDeclaredRoot(definitionDir, contract.api.root, 'api', contract.name) : undefined;
   const implRootPath = contract.impl.root ? resolveDeclaredRoot(definitionDir, contract.impl.root, 'impl', contract.name) : undefined;
-  const aliasBase = `${loadedConfig.resolvedConfig.prefixes.library}/${contract.name}`;
+  const aliasBase = `${loadedConfig.resolvedConfig.libraries.alias}/${contract.name}`;
   const apiAlias = `${aliasBase}/api`;
   const implAlias = `${aliasBase}/impl`;
 

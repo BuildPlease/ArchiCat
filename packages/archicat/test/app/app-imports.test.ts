@@ -28,8 +28,8 @@ describe('app imports', () => {
       name: 'main-api',
       dependencies: ['module.account.impl', 'library.postgresql.impl'],
       index: `
-        import { accountAssembly } from '@module/account/impl/index.js';
-        import { postgresqlAssembly } from '@library/postgresql/impl/index.js';
+        import { accountAssembly } from '#modules/account/impl/index.js';
+        import { postgresqlAssembly } from '#library/postgresql/impl/index.js';
         export const assemblies = [accountAssembly, postgresqlAssembly];
       `,
     });
@@ -53,7 +53,7 @@ describe('app imports', () => {
       name: 'media',
       implDependencies: ['module.account.impl'],
       implIndex: `
-        import { accountImpl } from '@module/account/impl/index.js';
+        import { accountImpl } from '#modules/account/impl/index.js';
         export const mediaImpl = accountImpl;
       `,
     });
@@ -77,7 +77,7 @@ describe('app imports', () => {
     createModule(root, {
       name: 'media',
       implIndex: `
-        import { accountImpl } from '@module/account/impl/index.js';
+        import { accountImpl } from '#modules/account/impl/index.js';
         export const mediaImpl = accountImpl;
       `,
     });

@@ -231,7 +231,8 @@ function resolveUnsupportedArchicatAlias(
   importPath: string,
 ): { apiAlias: string; implAlias: string } | undefined {
   for (const definition of project.definitions) {
-    const prefix = `${project.config.prefixes[definition.kind]}/${definition.name}`;
+    const namespace = definition.kind === 'module' ? project.config.modules.alias : project.config.libraries.alias;
+    const prefix = `${namespace}/${definition.name}`;
     const implAlias = definition.implAlias ?? `${prefix}/impl`;
 
     if (importPath === prefix || importPath === definition.alias || importPath === implAlias) {

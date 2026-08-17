@@ -2,31 +2,35 @@ import type { ArchicatAppContract, ArchicatConfig, ArchicatLibraryContract, Arch
 
 // MARK: - Configuration model
 
+export interface ModulesConfig {
+  readonly include: readonly string[];
+  readonly alias: string;
+}
+
+export interface LibrariesConfig {
+  readonly include: readonly string[];
+  readonly alias: string;
+}
+
+export interface AppsConfig {
+  readonly include: readonly string[];
+}
+
 export interface ResolvedArchicatConfig {
-  root: string;
-  outDir: string;
-  typescript: {
-    tsConfig: {
+  readonly root: string;
+  readonly outDir: string;
+  readonly typescript: {
+    readonly tsConfig: {
       extends?: string;
-      include: string[];
-      exclude: string[];
-      files: string[];
+      readonly include: readonly string[];
+      readonly exclude: readonly string[];
+      readonly files: readonly string[];
     };
   };
-  alias: Record<string, string>;
-  prefixes: {
-    module: string;
-    library: string;
-  };
-  modules: {
-    include: string[];
-  };
-  libraries: {
-    include: string[];
-  };
-  apps: {
-    include: string[];
-  };
+  readonly alias: Readonly<Record<string, string>>;
+  readonly modules: ModulesConfig;
+  readonly libraries: LibrariesConfig;
+  readonly apps: AppsConfig;
 }
 
 export interface LoadedArchicatConfig {
@@ -159,8 +163,8 @@ export interface ResolvedArchicatProject {
 
 export interface ArchicatBuildReport {
   generatedBy: 'archicat';
-  schemaVersion: 1;
-  prefixes: {
+  schemaVersion: 2;
+  aliases: {
     module: string;
     library: string;
   };

@@ -1,12 +1,12 @@
 export type {
-  ArchicatAliasConfig,
+  AliasConfig,
+  AppsConfigInput,
   ArchicatAppContract,
   ArchicatAppDependencies,
   ArchicatAppDependency,
   ArchicatAppInput,
   ArchicatConfig,
   ArchicatConfigInput,
-  ArchicatDefinitionRootConfig,
   ArchicatLibraryApiDependencies,
   ArchicatLibraryApiDependency,
   ArchicatLibraryContract,
@@ -19,9 +19,12 @@ export type {
   ArchicatModuleImplDependencies,
   ArchicatModuleImplDependency,
   ArchicatModuleInput,
-  ArchicatPrefixConfig,
   ArchicatSurfaceConfig,
   ArchicatSurfaceContract,
   ArchicatSurfaceInput,
+  LibrariesConfigInput,
+  ModulesConfigInput,
+  TypeScriptConfigInput,
+  TsConfigInput,
 } from './configs/index';
 export { defineApp, defineArchicatConfig, defineLibrary, defineModule } from './configs/index';

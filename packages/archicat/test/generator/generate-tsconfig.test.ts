@@ -9,11 +9,11 @@ import { runArchicat } from '@test/fixtures/run-archicat';
 // MARK: - Fixtures
 
 const ARCHICAT_TYPES_INCLUDE = './types/**/*.d.ts';
-const ACCOUNT_LEGACY_ALIAS = '@module/account';
-const ACCOUNT_API_ALIAS = '@module/account/api';
-const ACCOUNT_API_ALIAS_GLOB = '@module/account/api/*';
-const ACCOUNT_IMPL_ALIAS = '@module/account/impl';
-const ACCOUNT_IMPL_ALIAS_GLOB = '@module/account/impl/*';
+const ACCOUNT_LEGACY_ALIAS = '#modules/account';
+const ACCOUNT_API_ALIAS = '#modules/account/api';
+const ACCOUNT_API_ALIAS_GLOB = '#modules/account/api/*';
+const ACCOUNT_IMPL_ALIAS = '#modules/account/impl';
+const ACCOUNT_IMPL_ALIAS_GLOB = '#modules/account/impl/*';
 const ACCOUNT_API_GLOB_PATH = '../src/modules/account/api/*';
 const ACCOUNT_IMPL_GLOB_PATH = '../src/modules/account/impl/*';
 
@@ -104,6 +104,19 @@ describe('tsconfig generation', () => {
     expect(tsconfig.compilerOptions.experimentalDecorators).toBeUndefined();
   });
 
+  test('should honor definition aliases owned by their discovery config', () => {
+    const root = createProjectWithAccountModule('generate-tsconfig-definition-alias', {
+      config: { modulesAlias: '#domain' },
+    });
+
+    expectGenerate(root);
+
+    const tsconfig = readGeneratedTsconfig(root);
+    expectPath(tsconfig, '#domain/account/api/*', ACCOUNT_API_GLOB_PATH);
+    expectPath(tsconfig, '#domain/account/impl/*', ACCOUNT_IMPL_GLOB_PATH);
+    expect(tsconfig.compilerOptions.paths[ACCOUNT_API_ALIAS_GLOB]).toBeUndefined();
+  });
+
   test('should reject base tsconfig paths in extends chain', () => {
     const root = createProjectWithAccountModule('generate-tsconfig-root-paths', {
       tsconfigBase: BASE_TSCONFIG_WITH_PATHS,
@@ -138,11 +151,11 @@ describe('tsconfig generation', () => {
     expect(result.stderr).toMatch(/typescript\.tsConfig\.compilerOptions\.paths is not supported/);
   });
 
-  test('should reject configured aliases inside the reserved Archicat prefix', () => {
+  test('should reject configured aliases inside the reserved Archicat alias', () => {
     const root = createProjectWithAccountModule('generate-tsconfig-conflict', {
       config: {
         alias: {
-          '@module/*': './src/module/*',
+          '#modules/*': './src/module/*',
         },
       },
     });

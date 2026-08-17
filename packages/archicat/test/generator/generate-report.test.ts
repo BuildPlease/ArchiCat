@@ -21,8 +21,8 @@ describe('report generation', () => {
 
     const report = readBuildReport(root);
 
-    expect(report.schemaVersion).toBe(1);
-    expect(report.prefixes).toEqual({ module: '@module', library: '@library' });
+    expect(report.schemaVersion).toBe(2);
+    expect(report.aliases).toEqual({ module: '#modules', library: '#library' });
     expect(report.targets).toEqual(expect.arrayContaining([
       'module.account.api',
       'module.account.impl',
