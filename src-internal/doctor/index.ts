@@ -1,0 +1,1 @@
+export { doctorProject } from './doctor';

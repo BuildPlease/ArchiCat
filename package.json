@@ -1,25 +1,71 @@
 {
-  "name": "archicat-framework",
+  "name": "archicat",
   "version": "1.0.0",
-  "private": true,
-  "type": "module",
+  "description": "Modular mirroring (M²) for clean TypeScript architecture.",
+  "keywords": [
+    "architecture",
+    "clean-architecture",
+    "mirroring",
+    "modular",
+    "module-system"
+  ],
+  "homepage": "https://github.com/BuildPlease/ArchiCat#readme",
+  "bugs": {
+    "url": "https://github.com/BuildPlease/ArchiCat/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuildPlease/ArchiCat.git"
+  },
   "license": "MIT",
+  "author": "Simon Rastislav Kovačič",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/src/index.d.mts",
+        "default": "./dist/src/index.mjs"
+      },
+      "require": {
+        "types": "./dist/src/index.d.cts",
+        "default": "./dist/src/index.cjs"
+      }
+    }
+  },
+  "bin": {
+    "archicat": "./bin/archicat.mjs"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
   "scripts": {
-    "clean": "node scripts/clean.mjs",
-    "build": "pnpm run clean && lerna run build",
-    "typecheck": "lerna run typecheck",
-    "test": "lerna run test --stream",
-    "test:watch": "lerna run test:watch --stream",
-    "publish:packages": "lerna publish from-package --yes --summary-file ./lerna-publish-summary.json",
-    "preinstall": "npx only-allow pnpm"
+    "build": "pnpm run build:cli && pnpm run build:src",
+    "build:cli": "tsdown --config tsdown.config.cli.ts --config-loader unrun",
+    "build:src": "tsdown --config tsdown.config.src.ts --config-loader unrun",
+    "clean": "devkit run clean",
+    "format": "devkit run format-fix && devkit run lint-fix",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@buildplease/core": "1.0.1",
+    "jiti": "2.7.0"
   },
   "devDependencies": {
-    "@types/node": "26.0.0",
-    "lerna": "9.0.7",
-    "tsdown": "0.22.3",
+    "@buildplease/devkit": "1.0.1",
+    "@types/node": "26.2.0",
+    "tsdown": "0.22.14",
     "typescript": "6.0.3",
     "unrun": "0.3.1",
-    "vitest": "4.1.0"
+    "vitest": "4.1.10"
   },
-  "packageManager": "pnpm@11.9.0"
+  "peerDependencies": {
+    "typescript": "6.0.3"
+  },
+  "packageManager": "pnpm@11.20.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

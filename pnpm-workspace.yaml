@@ -1,11 +1,17 @@
+# Save exact dependency versions
 saveExact: true
-strictPeerDependencies: true
+
+# Auto-install resolvable peer dependencies
 autoInstallPeers: true
+
+# Fail on invalid or missing peer dependencies
+strictPeerDependencies: true
+
+# Do not auto-install before running scripts
 verifyDepsBeforeRun: false
+
+# Hoist dependencies for tools that require flat node_modules
+shamefullyHoist: false
+
+# Disable minimum package release age
 minimumReleaseAge: 0
-
-packages:
-  - packages/*
-
-allowBuilds:
-  nx: true
