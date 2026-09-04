@@ -26,11 +26,7 @@
     "resolvePackageJsonExports": true,
     "allowImportingTsExtensions": false,
 
-    /* Decorators */
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-
-    /* Output */
+    /* Project output */
     "rootDir": "./",
     "outDir": "./dist",
     "declarationDir": "./dist/types",
@@ -47,5 +43,6 @@
       "#test/*": ["./test/*"]
     }
   },
+  "include": ["src", "src-cli", "src-internal", "scripts", "test", "tsdown.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

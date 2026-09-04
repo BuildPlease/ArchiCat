@@ -1,10 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { writeTextFile } from '@src-internal/generator/file-writer';
 import type { ResolvedArchicatDefinition, ResolvedArchicatSurface } from '@src-internal/model';
 import { normalizePath, toPosixRelativeImport } from '@src-internal/path';
 import { hasDefaultExport, listTypeScriptFiles } from '@src-internal/scanner';
+
+import { writeTextFile } from './file-writer';
 
 export function generateMirrors(definitions: readonly ResolvedArchicatDefinition[]): void {
   for (const definition of definitions) {

@@ -2,12 +2,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { ArchicatDefaults } from '@src-internal/configuration';
-import { resetDirectory } from '@src-internal/generator/file-writer';
-import { generateGraphTypes } from '@src-internal/generator/generate-graph-types';
-import { generateMirrors } from '@src-internal/generator/generate-mirrors';
-import { generateReport } from '@src-internal/generator/generate-report';
-import { generateTsconfig } from '@src-internal/generator/generate-tsconfig';
 import type { ResolvedArchicatProject } from '@src-internal/model';
+
+import { resetDirectory } from './file-writer';
+import { generateGraphTypes } from './generate-graph-types';
+import { generateMirrors } from './generate-mirrors';
+import { generateReport } from './generate-report';
+import { generateTsconfig } from './generate-tsconfig';
 
 // MARK: - Artifact generation
 

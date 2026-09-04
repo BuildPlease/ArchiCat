@@ -1,9 +1,8 @@
-import { Console } from '@buildplease/core/node';
+import type { ArchicatCliCommandLine, ArchicatCliCommandOptions, ArchicatCliCommandResult } from '@src-cli/commands';
+import { runGraphCommand, runProjectCommand } from '@src-cli/commands';
+import { CliOutput } from '@src-cli/output';
 
-import type { ArchicatCliCommandLine, ArchicatCliCommandOptions, ArchicatCliCommandResult } from './commands/index';
-import { runGraphCommand, runProjectCommand } from './commands/index';
-
-const cli = new Console();
+const output = new CliOutput();
 
 // MARK: - Public
 
@@ -21,7 +20,7 @@ export async function runMain(argv = process.argv.slice(2), cwd = process.cwd())
     printResult(result);
     process.exitCode = result.exitCode;
   } catch (error) {
-    cli.error(error instanceof Error ? error.message : String(error));
+    output.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;
   }
 }
@@ -50,7 +49,7 @@ async function runCommand(
       printHelp();
       return undefined;
     default:
-      cli.error(`Unknown command: ${command}`);
+      output.error(`Unknown command: ${command}`);
       printHelp();
       return { exitCode: 1, lines: [] };
   }
@@ -67,27 +66,27 @@ function printResult(result: ArchicatCliCommandResult): void {
 function printLine(line: ArchicatCliCommandLine): void {
   switch (line.kind) {
     case 'title':
-      cli.title(line.product, line.command, line.rows ?? []);
+      output.title(line.product, line.command, line.rows ?? []);
       return;
     case 'panel':
-      cli.panel(line.title, line.rows, line.badge);
+      output.panel(line.title, line.rows, line.badge);
       return;
     case 'success':
-      cli.success(formatStatusLine(line));
+      output.success(formatStatusLine(line));
       return;
     case 'info':
       if (line.message.length === 0) {
-        cli.emptyLine();
+        output.emptyLine();
         return;
       }
 
-      cli.info(formatStatusLine(line));
+      output.info(formatStatusLine(line));
       return;
     case 'warning':
-      cli.warn(formatStatusLine(line));
+      output.warning(formatStatusLine(line));
       return;
     case 'error':
-      cli.error(formatStatusLine(line));
+      output.error(formatStatusLine(line));
       return;
   }
 }
@@ -95,11 +94,11 @@ function printLine(line: ArchicatCliCommandLine): void {
 function formatStatusLine(
   line: Extract<ArchicatCliCommandLine, { kind: 'success' | 'info' | 'warning' | 'error' }>,
 ): string {
-  return line.label ? cli.step(line.label, line.message) : line.message;
+  return line.label ? output.step(line.label, line.message) : line.message;
 }
 
 function printHelp(): void {
-  cli.log(
+  output.log(
     [
       'ArchiCat',
       '',

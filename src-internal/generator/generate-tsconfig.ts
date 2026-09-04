@@ -1,10 +1,11 @@
 import path from 'node:path';
 
-import { ArchicatDefaults } from '@src-internal/configuration/archicat-defaults';
-import { writeJsonFile } from '@src-internal/generator/file-writer';
+import { ArchicatDefaults } from '@src-internal/configuration';
 import type { ResolvedArchicatProject } from '@src-internal/model';
 import { normalizePath } from '@src-internal/path';
 import { readTsconfigCompilerOptions, readTsconfigExtendsPaths, readTsconfigFile } from '@src-internal/tsconfig';
+
+import { writeJsonFile } from './file-writer';
 
 // MARK: - TSConfig generation
 

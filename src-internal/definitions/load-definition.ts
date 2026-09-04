@@ -13,7 +13,7 @@ import type {
   ArchicatLibraryContract,
   ArchicatModuleContract,
   ArchicatSurfaceContract,
-} from '@/configs';
+} from '@/configuration';
 
 // MARK: - Definition loading
 

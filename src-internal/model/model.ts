@@ -1,4 +1,4 @@
-import type { ArchicatAppContract, ArchicatLibraryContract, ArchicatModuleContract } from '@/configs';
+import type { ArchicatAppContract, ArchicatLibraryContract, ArchicatModuleContract } from '@/configuration';
 
 // MARK: - Configuration model
 

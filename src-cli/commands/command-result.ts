@@ -1,4 +1,4 @@
-import type { ConsolePanelRow } from '@buildplease/core/node';
+import type { CliOutputRow } from '@src-cli/output';
 
 // MARK: - Public
 
@@ -6,7 +6,7 @@ export interface ArchicatCliCommandOptions {
   readonly config?: string;
 }
 
-export type ArchicatCliPanelRow = ConsolePanelRow;
+export type ArchicatCliPanelRow = CliOutputRow;
 
 export type ArchicatCliCommandLine =
   | {

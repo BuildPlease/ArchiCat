@@ -1,12 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { ArchicatDefaults } from '@src-internal/configuration/archicat-defaults';
 import type { LoadedArchicatConfig, ResolvedArchicatConfig } from '@src-internal/model';
 import { resolveProjectTsconfig } from '@src-internal/tsconfig';
 import { createJiti } from 'jiti';
 
-import type { ArchicatConfig } from '@/configs';
+import type { ArchicatConfig } from '@/configuration';
+
+import { ArchicatDefaults } from './archicat-defaults';
 
 // MARK: - Config loading
 

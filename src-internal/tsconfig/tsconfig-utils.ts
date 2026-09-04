@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
-import { ArchicatDefaults } from '@src-internal/configuration/archicat-defaults';
+import { ArchicatDefaults } from '@src-internal/configuration';
 import ts from 'typescript';
 
 // MARK: - TSConfig IO

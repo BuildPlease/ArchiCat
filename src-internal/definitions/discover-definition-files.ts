@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { ArchicatDefaults } from '@src-internal/configuration/archicat-defaults';
+import { ArchicatDefaults } from '@src-internal/configuration';
 import { isPathInside } from '@src-internal/path';
 
 // MARK: - Definition discovery

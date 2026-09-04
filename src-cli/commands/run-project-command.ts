@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import { Console } from '@buildplease/core/node';
+import { CliOutput } from '@src-cli/output';
 import { loadArchicatProject } from '@src-internal/context';
 import { doctorProject } from '@src-internal/doctor';
 import { generateArtifacts } from '@src-internal/generator';
@@ -9,7 +9,7 @@ import { formatViolation, validateProject } from '@src-internal/validator';
 
 import type { ArchicatCliCommandLine, ArchicatCliCommandOptions, ArchicatCliCommandResult } from './command-result';
 
-const cli = new Console();
+const output = new CliOutput();
 
 export type ArchicatProjectCommand = 'generate' | 'validate' | 'doctor';
 
@@ -97,12 +97,12 @@ function finishResult(
       ? {
           kind: 'success',
           label: 'done',
-          message: `Completed in ${cli.duration(Date.now() - startedAt)}`,
+          message: `Completed in ${output.duration(Date.now() - startedAt)}`,
         }
       : {
           kind: 'error',
           label: 'failed',
-          message: `Failed in ${cli.duration(Date.now() - startedAt)}`,
+          message: `Failed in ${output.duration(Date.now() - startedAt)}`,
         };
 
   return {

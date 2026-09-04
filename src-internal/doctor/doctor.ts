@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { ArchicatDefaults } from '@src-internal/configuration/archicat-defaults';
+import { ArchicatDefaults } from '@src-internal/configuration';
 import type { ResolvedArchicatProject } from '@src-internal/model';
 import { normalizePath } from '@src-internal/path';
 import { readTsconfigCompilerOptions, readTsconfigFile } from '@src-internal/tsconfig';

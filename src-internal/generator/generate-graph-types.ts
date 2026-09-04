@@ -1,8 +1,9 @@
 import path from 'node:path';
 
-import { ArchicatDefaults } from '@src-internal/configuration/archicat-defaults';
-import { writeTextFile } from '@src-internal/generator/file-writer';
+import { ArchicatDefaults } from '@src-internal/configuration';
 import type { ResolvedArchicatProject } from '@src-internal/model';
+
+import { writeTextFile } from './file-writer';
 
 // MARK: - Graph type generation
 

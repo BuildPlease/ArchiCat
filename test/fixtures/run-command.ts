@@ -1,4 +1,4 @@
-import { runGraphCommand, runProjectCommand } from '@src-cli/commands/index';
+import { runGraphCommand, runProjectCommand } from '@src-cli/commands';
 
 export interface TestCommandResult {
   readonly status: number;

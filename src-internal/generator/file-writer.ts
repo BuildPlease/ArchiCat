@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { ArchicatDefaults } from '@src-internal/configuration/archicat-defaults';
+import { ArchicatDefaults } from '@src-internal/configuration';
 import { assertSafeGeneratedDirectory } from '@src-internal/path';
 
 // MARK: - File writing

@@ -26,5 +26,5 @@ export type {
   ModulesConfigInput,
   TsConfigInput,
   TypeScriptConfigInput,
-} from './configs/index';
-export { defineApp, defineArchicatConfig, defineLibrary, defineModule } from './configs/index';
+} from './configuration';
+export { defineApp, defineArchicatConfig, defineLibrary, defineModule } from './configuration';
