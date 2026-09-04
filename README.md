@@ -1,10 +1,11 @@
-# ArchiCat
+# 🐈 ArchiCat
 
-**M²: Modular Mirroring.**
+**M² — Modular Mirroring for TypeScript.**
 
-ArchiCat is a Gradle-like generative architecture framework for TypeScript.
+ArchiCat keeps your TypeScript architecture clean, explicit, and enforceable.
+It turns your dependency graph into real import boundaries, so your project structure is not just a convention.
 
-TypeScript asks: **will this import resolve?**  
+TypeScript asks: **will this import resolve?**
 ArchiCat asks: **should this import exist?**
 
 ```bash
